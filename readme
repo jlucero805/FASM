@@ -1,0 +1,27 @@
+Simulation of "RISC-V" esque code.
+
+NOT PERFECT COPY OR RISC-V SPECIFICATION.
+
+Although similar, I made various ease-of-life changes.
+
+There is a simulated stack, however there is no implemented heap so far.
+
+There is no displacement operator yet, for example:
+
+	lw		a0 (0)sp
+
+is not supported yet.
+
+Preprocessor commands are not supported.
+
+Labels use:
+	$main
+notation instead of:
+	main:
+notation.
+
+
+sw stores into arg1 instead of into arg2
+
+...
+	

@@ -1,38 +1,61 @@
-$func1
-	// setup
-	addi sp sp 16
-	add t0 zero sp
-	sw t0 ra
-	addi t0 t0 1
-	sw t0 s0
-	addi t0 t0 1
-	sw t0 s1
-	addi t0 t0 1
-	sw t0 s2
+$fib
+	addi 	sp sp 4
+	add		t0 sp zero
+	sw		t0 ra
+	addi	t0 t0 -1
+	sw		t0 s0
+	addi	t0 t0 -1
+	sw		t0 s1
+	addi	t0 t0 -1
+	sw		t0 s0
+	addi	t0 t0 -1
+	lw		s0 t0
 
-	jal $func2
-	li s0 1
-	li s1 1
-	li s2 1
 
-	// cleanup
-	add t0 zero sp
-	lw ra t0
-	addi t0 t0 1
-	lw s0 t0
-	addi t0 t0 1
-	lw s1 t0
-	addi t0 t0 1
-	lw s2 t0
+	li 		s1 2
+	ble 	s0 s1 $if1
+	b		$endif1
+	$if1
+	li		a0 1
+	b $exit
+	$endif1
 
-	addi sp sp -16
-	ret 
+	addi	sp sp 1
+	addi 	s0 s0 -1
+	sw  	sp s0
+	jal 	$fib
+	addi	sp sp -1
 
-$func2
-	add a0 a0 a0
+	add 	s2 zero a0
+
+	addi	sp sp 1
+	sw  	sp s2
+	addi	sp sp 1
+	addi 	s0 s0 -1
+	sw  	sp s0
+	jal 	$fib
+	addi   	sp sp -1
+	lw		s2 sp
+	addi   	sp sp -1
+
+	add 	a0 a0 s2
+
+	$exit
+	add 	t0 sp zero
+	lw		ra t0
+	addi	t0 t0 -1
+	lw		s0 t0
+	addi	t0 t0 -1
+	lw		s1 t0
+	addi	t0 t0 -1
+	lw		s2 t0
+	addi	sp sp -4
 	ret
 
 $main
-	li a0 1
-	li a1 1
-	jal $func1
+	li 		a0 8
+	sw		sp a0
+	li 		ra 46
+	jal $fib
+	ecall 1
+	$finish
